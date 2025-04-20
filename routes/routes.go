@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"event_booking/middlewares"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,9 +12,12 @@ func RegisterRoutes(server *gin.Engine) {
 	server.GET("/events/:id", getEvent) // e.g. /events/1, /events/2
 
 	// Auth required
-	server.POST("/events", createEvents)
-	server.PUT("/events/:id", updateEvent)    // e.g. /events/1, /events/2
-	server.DELETE("/events/:id", deleteEvent) // e.g. /events/1, /events/2
+	authenticated := server.Group("/")
+	// Auth middleware will always be executed before all handlers in this group
+	authenticated.Use(middlewares.Authenticate)
+	authenticated.POST("/events", createEvents)
+	authenticated.PUT("/events/:id", updateEvent)    // e.g. /events/1, /events/2
+	authenticated.DELETE("/events/:id", deleteEvent) // e.g. /events/1, /events/2
 
 	// user
 	server.POST("/signup", signUp)
