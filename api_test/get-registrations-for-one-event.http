@@ -1,0 +1,2 @@
+GET http://localhost:8080/events/1/register
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXIxQHJlbmtlaHVhbmcubmV0IiwiZXhwIjoxNzQ1MjU5MjQyLCJ1c2VySWQiOjF9.qNhT9q2zaapf1LXmlvkcEggtlIJcUam717rxZibPvR0
