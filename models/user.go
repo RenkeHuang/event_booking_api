@@ -12,10 +12,10 @@ type User struct {
 	password string `binding:"required"`
 }
 
-func (u User) Save() error {
+func (user *User) Save() error {
 	// Store the user to the database
 	query := `
-	INSERT INTO users (email, password) 
+	INSERT INTO users (email, password)
 	VALUES (?, ?)`
 	stmt, err := db.DB.Prepare(query)
 	if err != nil {
@@ -24,21 +24,21 @@ func (u User) Save() error {
 	defer stmt.Close()
 
 	// Execute the statement with the user data
-	hashedPassword, err := utils.HashPassword(u.password)
+	hashedPassword, err := utils.HashPassword(user.password)
 	if err != nil {
 		return err
 	}
-	result, err := stmt.Exec(u.Email, hashedPassword)
+	result, err := stmt.Exec(user.Email, hashedPassword)
 	if err != nil {
 		return err
 	}
 	id, err := result.LastInsertId()
-	u.ID = int64(id)
+	user.ID = int64(id)
 
 	return err
 }
 
-func (u User) ValidateCredentials() error {
+func (u *User) ValidateCredentials() error {
 	// Check if the user exists in the database
 	query := `SELECT id, password FROM users WHERE email = ?`
 	row := db.DB.QueryRow(query, u.Email)

@@ -38,12 +38,13 @@ func getEvent(context *gin.Context) {
 }
 
 func createEvents(context *gin.Context) {
+	// Make sure only user with authenticated token can create events
 	token := context.Request.Header.Get("Authorization")
 	if token == "" {
 		context.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization token is required."})
 		return
 	}
-	err := utils.VerifyToken(token)
+	userId, err := utils.VerifyToken(token)
 	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
@@ -58,8 +59,8 @@ func createEvents(context *gin.Context) {
 		return
 	}
 
-	event.ID = 1
-	event.UserID = 1
+	// event.ID = 1
+	event.UserID = userId
 
 	err = event.Save()
 	if err != nil {
