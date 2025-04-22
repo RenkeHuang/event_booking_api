@@ -43,7 +43,7 @@ The server will start at `http://localhost:8080`
 - `GET http://localhost:8080/events/:id` - Get details of an event
 - `POST http://localhost:8080/events` - Create a new event
 - `PUT http://localhost:8080/events/:id` - Update an event
-- `DELETE [/api/events/:id](http://localhost:8080/events/:id)` - Delete an event
+- `DELETE http://localhost:8080/events/:id` - Delete an event
 
 #### Bookings
 - `POST http://localhost:8080/events/:id/register` - Book an event
